@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
+#include <vector>
 
 _Monitor Bank {
     unsigned int numStudents;
-    vector<int> studentIdToBalance;
+    std::vector<int> studentIdToBalance;
   public:
     Bank( unsigned int numStudents );
     void deposit( unsigned int id, unsigned int amount );
