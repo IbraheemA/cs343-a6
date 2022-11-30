@@ -1,3 +1,5 @@
+#pragma once
+
 _Monitor Printer {
   public:
 	enum Kind { Parent, Groupoff, WATCardOffice, NameServer, Truck, BottlingPlant, Student, Vending, Courier };

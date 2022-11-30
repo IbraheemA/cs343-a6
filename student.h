@@ -1,3 +1,5 @@
+#pragma once
+
 _Task Student {
 	void main();
   public:

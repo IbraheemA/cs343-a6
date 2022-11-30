@@ -1,3 +1,5 @@
+#pragma once
+
 _Task BottlingPlant {
     void main();
   public:

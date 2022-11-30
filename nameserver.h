@@ -1,3 +1,5 @@
+#pragma once
+
 _Task NameServer {
 	void main();
   public:

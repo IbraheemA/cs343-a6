@@ -1,3 +1,5 @@
+#pragma once
+
 _Task Groupoff {
 	void main();
   public:

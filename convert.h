@@ -1,3 +1,5 @@
+#pragma once
+
 static intmax_t convert( const char * str ) {			// convert C string to integer
     char * endptr;
     errno = 0;											// reset

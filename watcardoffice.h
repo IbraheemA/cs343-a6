@@ -1,3 +1,5 @@
+#pragma once
+
 _Task WATCardOffice {
 	struct Job {							// marshalled arguments and return future
 		Args args;							// call arguments (YOU DEFINE "Args")

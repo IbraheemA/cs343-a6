@@ -1,3 +1,5 @@
+#pragma once
+
 struct ConfigParms {
     unsigned int sodaCost;					// MSRP per bottle
     unsigned int numStudents;				// number of students to create

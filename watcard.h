@@ -1,3 +1,5 @@
+#pragma once
+
 class WATCard {
 	WATCard( const WATCard & ) = delete;	// prevent copying
 	WATCard( const WATCard && ) = delete;

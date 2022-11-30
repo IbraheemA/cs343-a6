@@ -1,3 +1,5 @@
+#pragma once
+
 _Task Truck {
     void main();
   public:
