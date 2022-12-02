@@ -1,5 +1,8 @@
 #pragma once
 
+#include "printer.h"
+#include "bank.h"
+
 _Task Parent {
     void main();
     Printer & printer;

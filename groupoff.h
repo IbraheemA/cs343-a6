@@ -1,6 +1,7 @@
 #pragma once
 
 #include "watcard.h"
+#include "printer.h"
 
 _Task Groupoff {
     void main();

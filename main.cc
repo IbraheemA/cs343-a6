@@ -1,5 +1,10 @@
 #include <iostream>
 #include <fstream>
+#include <uPRNG.h>
+
+#include "convert.h"
+
+#include "config.h"
 
 int main (int argc, char* argv[]) {
 

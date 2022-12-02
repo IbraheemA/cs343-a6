@@ -4,6 +4,7 @@
 #include "bank.h"
 #include "printer.h"
 
+#include <vector>
 #include <queue>
 
 _Task WATCardOffice {
@@ -26,7 +27,7 @@ _Task WATCardOffice {
         void main();
 
         WATCardOffice & office;
-        Task( WATCardOffice office ) : office(office) {}
+        Courier( WATCardOffice office ) : office(office) {}
     };					// communicates with bank
 
     void main();

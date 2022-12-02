@@ -1,5 +1,9 @@
 #pragma once
 
+#include "printer.h"
+#include "nameserver.h"
+#include "bottlingplant.h"
+
 _Task VendingMachine {
 	void main();
   public:

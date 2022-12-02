@@ -1,7 +1,7 @@
 #include "watcardoffice.h"
 
 WATCardOffice::WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers )
-    : printer{prt}, bank{bank}, couriers(numCouriers) {}
+    : printer{prt}, bank{bank}, couriers(numCouriers, Courier{ *this }) {}
 
 WATCard::FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount ) {
     Job *j = new Job{sid, amount};

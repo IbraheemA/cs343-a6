@@ -3,7 +3,7 @@
 #include "vendingmachine.h"
 #include "bottlingplant.h"
 
-#include <prng.h>
+#include <uPRNG.h>
 
 void Student::main() {
     unsigned int numPurchases = prng(1, maxPurchases);
