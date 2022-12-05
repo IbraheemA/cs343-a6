@@ -8,20 +8,20 @@ void NameServer::main() {
 
 NameServer::NameServer( Printer & prt, unsigned int numVendingMachines, unsigned int numStudents ):
     prt{prt}, numVendingMachines{numVendingMachines}, numStudents{numStudents} {
-    vendingmachines = new VendingMachine* [numVendingMachines];
+    vendingMachines = new VendingMachine* [numVendingMachines];
     offsets = new int[numStudents];
 
     vendingMachineCount = 0;
 }
 
 void NameServer::VMregister( VendingMachine * vendingmachine ) {
-    vendingmachines[vendingMachineCount++] = vendingmachine;
+    vendingMachines[vendingMachineCount++] = vendingmachine;
 }
 
 VendingMachine * NameServer::getMachine( unsigned int id ) {
-    return vendingmachines[id + offsets[id]++ % numVendingMachines];
+    return vendingMachines[id + offsets[id]++ % numVendingMachines];
 }
 
 VendingMachine ** NameServer::getMachineList() {
-    return vendingmachines;
+    return vendingMachines;
 }

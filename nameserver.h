@@ -16,7 +16,7 @@ _Task NameServer {
 
     int * offsets;
 
-    VendingMachine ** vendingmachines;
+    VendingMachine ** vendingMachines;
     void main();
   public:
     NameServer( Printer & prt, unsigned int numVendingMachines, unsigned int numStudents );

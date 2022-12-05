@@ -1,9 +1,10 @@
 #include "bottlingplant.h"
 
 #include "printer.h"
+#include "truck.h"
 
 void BottlingPlant::main() {
-    Truck truck = Truck(prt, nameServer, this, numVendingMachines, maxStockPerFlavour);
+    Truck truck = Truck(prt, nameServer, *this, numVendingMachines, maxStockPerFlavour);
 
     for (;;) {
         _Accept(~BottlingPlant) {
@@ -33,9 +34,6 @@ BottlingPlant::BottlingPlant(
 }
 
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
-    // if (shuting_down) {
-    //     throw
-    // }
     _Accept(~BottlingPlant) {
         throw Shutdown();
     } _Else {

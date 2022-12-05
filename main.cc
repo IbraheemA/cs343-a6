@@ -6,6 +6,16 @@
 
 #include "config.h"
 
+#include "bottlingplant.h"
+#include "printer.h"
+#include "vendingmachine.h"
+#include "student.h"
+#include "watcardoffice.h"
+#include "nameserver.h"
+#include "groupoff.h"
+#include "bank.h"
+#include "parent.h"
+
 int main (int argc, char* argv[]) {
 
     const char * configFileName = "soda.config";    
@@ -34,4 +44,45 @@ int main (int argc, char* argv[]) {
     ConfigParms configParms;
 
     processConfigFile(configFileName, configParms);
+
+    // BottlingPlant bottlingPlant;
+
+
+    Printer printer{ configParms.numStudents, configParms.numVendingMachines, configParms.numCouriers };
+    Bank bank{configParms.numStudents};
+    WATCardOffice watCardOffice{printer, bank, configParms.numCouriers};
+
+    NameServer nameServer{printer, configParms.numVendingMachines, configParms.numStudents};
+    Groupoff groupoff{printer, configParms.numStudents, configParms.sodaCost, configParms.groupoffDelay };
+
+    std::vector<Student*> students;
+    for (int i = 0; i < configParms.numStudents; ++i) {
+        students.emplace_back(new Student{printer, nameServer, watCardOffice, groupoff, i, configParms.maxPurchases});
+    }
+
+    Parent parent{printer, bank, configParms.numStudents, configParms.parentalDelay};
+
+    std::vector<VendingMachine *> vendingMachines;
+    for (int i = 0; i < configParms.numVendingMachines; ++i) {
+        vendingMachines.emplace_back(new VendingMachine{printer, nameServer, i, configParms.sodaCost});
+    }
+
+    {
+        BottlingPlant bottlingPlant{
+            printer,
+            nameServer,
+            configParms.numVendingMachines,
+            configParms.maxShippedPerFlavour,
+            configParms.maxStockPerFlavour,
+            configParms.timeBetweenShipments    
+        };
+
+        for (int i = 0; i < configParms.numStudents; ++i) {
+            delete students[i];
+        }
+    }
+
+    for (int i = 0; i < configParms.numVendingMachines; ++i) {
+        delete vendingMachines[i];
+    }
 }

@@ -12,7 +12,7 @@ _Task WATCardOffice {
         // Args
         const unsigned int sid;
         const unsigned int amount;
-        const WATCard * existingCard;
+        WATCard * existingCard;
 
         WATCard::FWATCard result;			// return future
 
@@ -27,20 +27,34 @@ _Task WATCardOffice {
         void main();
 
         WATCardOffice & office;
-        Courier( WATCardOffice office ) : office(office) {}
+        Bank & bank;
+
+        public:
+            Courier( WATCardOffice & office, Bank & bank ) : office(office), bank(bank) {}
     };					// communicates with bank
 
-    void main();
+    void main() override;
 
     Printer & printer;
     Bank & bank;
-    const std::vector<Courier> couriers;
+    std::vector<Courier*> couriers;
 
     std::queue<Job*> jobQueue;
 
 public:
     _Event Lost {};							// lost WATCard
-    WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers );
+    WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers ) : printer{prt},
+    bank{bank}
+    {
+        for (int i = 0; i < numCouriers; ++i) {
+            couriers.push_back(
+                new Courier(
+                    *this,
+                    bank
+                )
+            );
+        }
+    }
     WATCard::FWATCard create( unsigned int sid, unsigned int amount )
         __attribute__(( warn_unused_result ));
     WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard * card )

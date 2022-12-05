@@ -1,7 +1,19 @@
 #include "watcardoffice.h"
 
-WATCardOffice::WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers )
-    : printer{prt}, bank{bank}, couriers(numCouriers, Courier{ *this }) {}
+// WATCardOffice::WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers )
+//     :
+//     printer{prt},
+//     bank{bank}
+//     {
+//         for (int i = 0; i < numCouriers; ++i) {
+//             couriers.push_back(
+//                 new Courier(
+//                     *this,
+//                     bank
+//                 )
+//             );
+//         }
+//     }
 
 WATCard::FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount ) {
     Job *j = new Job{sid, amount};
@@ -24,7 +36,7 @@ WATCardOffice::Job * WATCardOffice::requestWork() {
     return j;
 }
 
-WATCardOffice::Courier::main() {
+void WATCardOffice::Courier::main() {
     for (;;) {
         // Block and wait for work
         Job * j = office.requestWork();
