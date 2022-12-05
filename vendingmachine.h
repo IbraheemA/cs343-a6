@@ -4,9 +4,14 @@
 #include "bottlingplant.h"
 #include "watcard.h"
 
-// class NameServer;
+#include "nameserver.h"
 
 _Task VendingMachine {
+	Printer & prt;
+    unsigned int id;
+    unsigned int sodaCost;
+
+    unsigned int * currentInventory;
 	void main();
   public:
 	_Event Free {};						// free, advertisement

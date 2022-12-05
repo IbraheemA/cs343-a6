@@ -56,25 +56,25 @@ _Monitor Printer {
 	}
 	void print( Kind kind, char state, unsigned int value1 ) {
 		flushBuffer(kind);
-		printBuffer[kind] = state + value1;
+		// printBuffer[kind] = state + value1;
 	}
 	void print( Kind kind, char state, unsigned int value1, unsigned int value2 ) {
 		flushBuffer(kind);
-		printBuffer[kind] = state + " " + value1 + "," + value2;
+		// printBuffer[kind] = std::string(state) + " " + std::string(value1) + "," + std::string(value2);
 	}
 	void print( Kind kind, unsigned int lid, char state ) {
 		int index = getIndex(kind, lid);
 		flushBuffer(index);
-		printBuffer[index] = state;
+		// printBuffer[index] = state;
 	}
 	void print( Kind kind, unsigned int lid, char state, unsigned int value1 ) {
 		int index = getIndex(kind, lid);
 		flushBuffer(index);
-		printBuffer[index] = state + value1;
+		// printBuffer[index] = state + value1;
 	}
 	void print( Kind kind, unsigned int lid, char state, unsigned int value1, unsigned int value2 ) {
 		int index = getIndex(kind, lid);
 		flushBuffer(index);
-		printBuffer[index] = state + " " + value1 + "," + value2;
+		// printBuffer[index] = std::string(state) + " " + std::string(value1) + "," + std::string(value2);
 	}
 };

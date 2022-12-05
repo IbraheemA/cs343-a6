@@ -6,7 +6,7 @@ CXX = u++					# compiler
 CXXFLAGS = -g -multi -O2 -Wall -Wextra -MMD # -D"${BCHECK}" # compiler flags
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-OBJECTS = nameserver.o main.o bank.o config.o convert.o groupoff.o parent.o printer.o student.o truck.o vendingmachine.o watcard.o watcardoffice.o bottlingplant.o
+OBJECTS = vendingmachine.o nameserver.o  main.o bank.o config.o convert.o groupoff.o parent.o printer.o student.o truck.o  watcard.o watcardoffice.o bottlingplant.o
 EXEC = soda
 
 DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"

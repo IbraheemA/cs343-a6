@@ -3,8 +3,8 @@
 // class Printer;
 // class NameServer;
 
-// #include "printer.h"
-// #include "nameserver.h"
+#include "printer.h"
+#include "nameserver.h"
 
 static const int NUM_OF_FLAVOURS = 4;
 
