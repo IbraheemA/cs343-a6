@@ -1,15 +1,20 @@
 #include <uPRNG.h>
 
+#include "bottlingplant.h"
+
 _Task VendingMachine {
 	void main() {
-        for (;;) {}
+        for (;;) {
+            _Accept(inventory) {
+                _Accept(restocked);
+            } or _Accept(buy);
+        }
     }
     Printer & prt;
     unsigned int id;
     unsigned int sodaCost;
 
     int * inventory;
-    bool restocking = false; // TODO: maybe rework this to not use a flag
   public:
 	_Event Free {};						// free, advertisement
 	_Event Funds {};					// insufficient funds
@@ -18,12 +23,9 @@ _Task VendingMachine {
     prt{prt}, id{id}, sodaCost{sodaCost}
     {
         nameServer.VMregister(this);
-        inventory = new int[4]; // TODO: number of soda flavours - update to a constant or a vector this is ugly
+        inventory = new int[NUM_OF_FLAVOURS];
     }
 	void buy( BottlingPlant::Flavours flavour, WATCard & card ) {
-        if (restocking) {
-            _Accept(restocked);
-        }
         if (card.getBalance < sodaCost) {
             _Throw Funds();
         }
@@ -37,12 +39,9 @@ _Task VendingMachine {
         card.withdraw(sodaCost);
     }
 	unsigned int * inventory() {
-        restocking = true;
         return inventory;
     }
-	void restocked() {
-        restocking = false;
-    }
+	void restocked() {}
 	_Nomutex unsigned int cost() const {
         return sodaCost;
     }
