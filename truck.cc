@@ -1,5 +1,6 @@
 #include "truck.h"
 
+
 void Truck::main() {
   try {
     VendingMachine ** vms = nameServer.getMachineList();
@@ -8,11 +9,11 @@ void Truck::main() {
       plant.getShipment(cargo);
 
       for (int i = 0; i < numVendingMachines; i++) {
-        unsigned int inventory[NUM_OF_FLAVOURS] = vms[restockIndex].inventory();
+        unsigned int * inventory = vms[restockIndex]->inventory();
         int inventoryCount = 0;
         for (int j = 0; j < NUM_OF_FLAVOURS; j++) {
           if (cargo[j] > 0 && inventory[j] < maxStockPerFlavour) {
-            int newInventory = max(inventory[j] + cargo[j], maxStockPerFlavour);
+            int newInventory = std::max(inventory[j] + cargo[j], maxStockPerFlavour);
             cargo[j] = inventory[j] + cargo[j] - newInventory;
             inventory[j] = newInventory;
             inventoryCount += cargo[j];
@@ -21,19 +22,19 @@ void Truck::main() {
         if (prng(100) == 0) {
           yield(10);
         }
-        vms[restockIndex++].restocked();      
+        vms[restockIndex++]->restocked();      
         if (inventoryCount == 0) {
           break;
         }
       }    
     }
-  } catch(Shutdown e) {}
+  } catch(BottlingPlant::Shutdown e) {}
 }
 
 Truck::Truck( Printer & prt, NameServer & nameServer, BottlingPlant & plant,
     unsigned int numVendingMachines, unsigned int maxStockPerFlavour ) :
     prt{prt}, nameServer{nameServer}, plant{plant},
   numVendingMachines{numVendingMachines}, maxStockPerFlavour{maxStockPerFlavour} {
-    cargo = new int[numVendingMachines];
+    cargo = new unsigned int[numVendingMachines];
     restockIndex = 0;
 }

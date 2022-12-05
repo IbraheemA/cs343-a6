@@ -1,5 +1,9 @@
 #pragma once
 
+#include "printer.h"
+#include "nameserver.h"
+#include "vendingmachine.h"
+
 _Task Truck {
     Printer & prt;
     NameServer & nameServer;
