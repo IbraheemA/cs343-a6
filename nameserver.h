@@ -1,7 +1,9 @@
 #pragma once
 
 #include "printer.h"
-#include "vendingmachine.h"
+// #include "vendingmachine.h"
+
+class VendingMachine;
 
 _Task NameServer {
     Printer & prt;

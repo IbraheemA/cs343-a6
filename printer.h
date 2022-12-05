@@ -1,19 +1,21 @@
 #pragma once
 
+#include <string>
+
 _Monitor Printer {
 	unsigned int numStudents;
 	unsigned int numVendingMachines;
 	unsigned int numCouriers;
 
-	string *printBuffer;
+	std::string *printBuffer;
 
 	void flushBuffer(int index) {
 		if (printBuffer[index] != "") {
-			for (string s: printBuffer) {
-				cout << s << "\t";
+			for (std::string s: printBuffer) {
+				std::cout << s << "\t";
 				s = "";
 			}
-			cout << endl;
+			std::cout << std::endl;
 		}
 	}
 

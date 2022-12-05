@@ -1,8 +1,10 @@
 #pragma once
 
 #include "printer.h"
-#include "nameserver.h"
 #include "bottlingplant.h"
+#include "watcard.h"
+
+// class NameServer;
 
 _Task VendingMachine {
 	void main();

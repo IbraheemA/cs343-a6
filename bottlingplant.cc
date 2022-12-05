@@ -4,7 +4,9 @@ void BottlingPlant::main() {
     Truck truck = Truck(prt, nameServer, this, numVendingMachines, maxStockPerFlavour);
 
     for (;;) {
-        _Accept(getShipment) {
+        _Accept(~BottlingPlant) {
+            break;
+        } or _Accept(getShipment) {
             yield(timeBetweenShipments);
             for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
                 nextShipment[i] = prng(maxShippedPerFlavour);
@@ -29,7 +31,14 @@ BottlingPlant::BottlingPlant(
 }
 
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
-    for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
-        cargo[i] = nextShipment[i];
+    // if (shuting_down) {
+    //     throw
+    // }
+    _Accept(~BottlingPlant) {
+        throw Shutdown();
+    } _Else {
+        for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
+            cargo[i] = nextShipment[i];
+        }
     }
 }
