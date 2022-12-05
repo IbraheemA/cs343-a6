@@ -1,5 +1,7 @@
 #include "bottlingplant.h"
 
+#include "printer.h"
+
 void BottlingPlant::main() {
     Truck truck = Truck(prt, nameServer, this, numVendingMachines, maxStockPerFlavour);
 

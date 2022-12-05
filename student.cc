@@ -19,17 +19,17 @@ void Student::main() {
         for (;;) { // This loop exists to allow retrying without the random wait, for lost cards
             try {
                 _Select ( giftCard ) {
-                    machine.buy(favFlavour, *giftCard);
+                    machine->buy(favFlavour, *giftCard);
                     giftCard.reset();
                 } or _Select ( watCard ) {
-                    machine.buy(favFlavour, *watCard);
+                    machine->buy(favFlavour, *watCard);
                 }
                 numPurchases -= 1; // Successfully bought and paid for a soda; standard outcome
             } catch (VendingMachine::Free &) {
                 // Got a free soda; fixed yield then re-attempt 
                 yield(4);
             } catch (VendingMachine::Funds &) {
-                cardOffice.transfer(id, machine.cost() + 5, watCard);
+                cardOffice.transfer(id, machine->cost() + 5, watCard);
             } catch (VendingMachine::Stock &) {
                 machine = nameServer.getMachine(id);
             } catch(WATCardOffice::Lost &) {

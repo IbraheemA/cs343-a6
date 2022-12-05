@@ -5,6 +5,7 @@
 #include "watcard.h"
 
 #include "nameserver.h"
+// class NameServer;
 
 _Task VendingMachine {
 	Printer & prt;

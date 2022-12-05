@@ -1,11 +1,11 @@
 #pragma once
 
 // class Printer;
-// class NameServer;
 
 #include "printer.h"
 #include "nameserver.h"
 
+// class NameServer;
 static const int NUM_OF_FLAVOURS = 4;
 
 _Task BottlingPlant {
