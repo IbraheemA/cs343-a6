@@ -4,6 +4,8 @@
 #include <fstream>
 
 void WATCardOffice::main() {
+    printer.print(Printer::Kind::WATCardOffice, 'S');
+
     std::vector<Courier*> couriers;
 
     // std::ofstream test_out{"t.out", std::ios::app};
