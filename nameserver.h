@@ -8,7 +8,7 @@ _Monitor Printer;
 _Task VendingMachine;
 
 _Task NameServer {
-    Printer & prt;
+    Printer & printer;
     unsigned int numVendingMachines;
     unsigned int numStudents;
 

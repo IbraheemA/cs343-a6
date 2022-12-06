@@ -28,33 +28,26 @@ _Task WATCardOffice {
 
         WATCardOffice & office;
         Bank & bank;
+        Printer & printer;
 
         public:
-            Courier( WATCardOffice & office, Bank & bank ) : office(office), bank(bank) {}
+            Courier( WATCardOffice & office, Bank & bank, Printer & printer )
+            : office(office), bank(bank), printer{printer} {}
     };					// communicates with bank
 
     void main() override;
 
     Printer & printer;
     Bank & bank;
-    std::vector<Courier*> couriers;
+    unsigned int numCouriers;
+
+    uCondition jobsAreAvailable;
 
     std::queue<Job*> jobQueue;
 
 public:
     _Event Lost {};							// lost WATCard
-    WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers ) : printer{prt},
-    bank{bank}
-    {
-        for (int i = 0; i < numCouriers; ++i) {
-            couriers.push_back(
-                new Courier(
-                    *this,
-                    bank
-                )
-            );
-        }
-    }
+    WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers );
     WATCard::FWATCard create( unsigned int sid, unsigned int amount )
         __attribute__(( warn_unused_result ));
     WATCard::FWATCard transfer( unsigned int sid, unsigned int amount, WATCard * card )

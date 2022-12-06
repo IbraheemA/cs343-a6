@@ -8,7 +8,7 @@
 // class NameServer;
 
 _Task VendingMachine {
-	Printer & prt;
+	Printer & printer;
     unsigned int id;
     unsigned int sodaCost;
 

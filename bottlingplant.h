@@ -9,7 +9,7 @@
 static const int NUM_OF_FLAVOURS = 4;
 
 _Task BottlingPlant {
-    Printer & prt;
+    Printer & printer;
     NameServer & nameServer;
     unsigned int numVendingMachines;
     unsigned int maxShippedPerFlavour;
@@ -17,6 +17,7 @@ _Task BottlingPlant {
     unsigned int timeBetweenShipments;
 
     uCondition shipment;
+    bool shutdownHasHappened = false;
 
     unsigned int *nextShipment;
     void main();

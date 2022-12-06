@@ -5,7 +5,7 @@
 #include "vendingmachine.h"
 
 _Task Truck {
-    Printer & prt;
+    Printer & printer;
     NameServer & nameServer;
     BottlingPlant & plant;
     unsigned int numVendingMachines;

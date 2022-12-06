@@ -70,6 +70,7 @@ _Monitor Printer {
 			printBuffer = new PrintEntry*[6 + numStudents + numVendingMachines + numCouriers];
 
 			for (int i = 0; i < 6 + numStudents + numVendingMachines + numCouriers; i++) {
+				// std::cout <<  << "\t"; 
 				printBuffer[i] = nullptr;
 			}
 		}

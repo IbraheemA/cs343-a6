@@ -1,4 +1,6 @@
 #include "groupoff.h"
+#include <iostream>
+#include <fstream>
 
 Groupoff::Groupoff( Printer & prt, unsigned int numStudents, unsigned int sodaCost,
     unsigned int groupoffDelay ) : printer(prt), numStudents(numStudents), sodaCost(sodaCost),
@@ -11,6 +13,7 @@ WATCard::FWATCard Groupoff::giftCard() {
 }
 
 void Groupoff::main() {
+    printer.print(Printer::Kind::Groupoff, 'S');
     // First, wait for numStudents calls to giftCard; assume each student only calls it once
     while (nextCardToAssign < numStudents) {
         _Accept(giftCard);
@@ -43,6 +46,10 @@ void Groupoff::main() {
             WATCard * realCard = new WATCard();
             realCard->deposit(sodaCost);
             fWATCardPool[num].delivery(realCard);
+            printer.print(Printer::Kind::Groupoff, 'D', sodaCost);
         }
     }
+    // std::ofstream test_out{"t.out", std::ios::app};
+    // std::osacquire(/**/std::cout) << "groupoff ded" << std::endl;
+    printer.print(Printer::Kind::Groupoff, 'F');
 }

@@ -3,19 +3,37 @@
 #include "printer.h"
 #include "truck.h"
 
+#include <iostream>
+#include <fstream>
+
 void BottlingPlant::main() {
-    Truck truck = Truck(prt, nameServer, *this, numVendingMachines, maxStockPerFlavour);
+    printer.print(Printer::Kind::BottlingPlant, 'S');
+    Truck truck = Truck(printer, nameServer, *this, numVendingMachines, maxStockPerFlavour);
 
     for (;;) {
         _Accept(~BottlingPlant) {
+            shutdownHasHappened = true;
+            try {
+                _Accept(getShipment);
+            } catch( uMutexFailure::RendezvousFailure & ) {
+                // XXX
+            }
             break;
         } or _Accept(getShipment) {
             yield(timeBetweenShipments);
+            int totalBottles = 0;
             for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
-                nextShipment[i] = prng(maxShippedPerFlavour);
+                int b = prng(maxShippedPerFlavour);
+                nextShipment[i] = b;
+                totalBottles += b;
             }
+            printer.print(Printer::Kind::BottlingPlant, 'G', totalBottles);
         }
     }
+
+    std::ofstream test_out{"t.out", std::ios::app};
+    // std::osacquire(/**/std::cout) << "plant death time B)" << std::endl;
+    printer.print(Printer::Kind::BottlingPlant, 'F');
 }
 
 BottlingPlant::BottlingPlant(
@@ -23,7 +41,7 @@ BottlingPlant::BottlingPlant(
     unsigned int maxShippedPerFlavour, unsigned int maxStockPerFlavour,
     unsigned int timeBetweenShipments
 ) :
-    prt{prt}, nameServer{nameServer}, numVendingMachines{numVendingMachines},
+    printer{prt}, nameServer{nameServer}, numVendingMachines{numVendingMachines},
     maxShippedPerFlavour{maxShippedPerFlavour}, maxStockPerFlavour{maxStockPerFlavour},
     timeBetweenShipments{timeBetweenShipments}
 {
@@ -34,11 +52,14 @@ BottlingPlant::BottlingPlant(
 }
 
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
-    _Accept(~BottlingPlant) {
+    std::ofstream test_out{"t.out", std::ios::app};
+    // std::osacquire(/**/std::cout) << "shipment pls?" << std::endl;
+    if (shutdownHasHappened) {
         throw Shutdown();
-    } _Else {
-        for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
-            cargo[i] = nextShipment[i];
-        }
     }
+
+    for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
+        cargo[i] = nextShipment[i];
+    }
+    printer.print(Printer::Kind::BottlingPlant, 'P');
 }
