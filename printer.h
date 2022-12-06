@@ -99,6 +99,8 @@ _Monitor Printer {
 		}
 
 		delete [] printBuffer;
+
+		std::cout << "***********************" << std::endl;
 	}
 
 	void print( Kind kind, char state ) {
