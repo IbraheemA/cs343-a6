@@ -83,7 +83,8 @@ Printer::Printer( unsigned int numStudents, unsigned int numVendingMachines, uns
 Printer::~Printer() {
     for (int i = 0; i < 6 + numStudents + numVendingMachines + numCouriers; i++) {
         if (printBuffer[i] != nullptr) {
-            delete printBuffer[i];
+            flushBuffer(i);
+            break;
         }
     }
 

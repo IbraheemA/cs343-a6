@@ -55,18 +55,6 @@ int main (int argc, char* argv[]) {
     NameServer nameServer{printer, configParms.numVendingMachines, configParms.numStudents};
     Groupoff groupoff{printer, configParms.numStudents, configParms.sodaCost, configParms.groupoffDelay };
 
-    std::vector<Student*> students;
-    for (int i = 0; i < configParms.numStudents; ++i) {
-        students.emplace_back(new Student{printer, nameServer, *watCardOffice, groupoff, i, configParms.maxPurchases});
-    }
-
-    Parent * parent = new Parent{printer, *bank, configParms.numStudents, configParms.parentalDelay};
-
-    std::vector<VendingMachine *> vendingMachines;
-    for (int i = 0; i < configParms.numVendingMachines; ++i) {
-        vendingMachines.emplace_back(new VendingMachine{printer, nameServer, i, configParms.sodaCost});
-    }
-
     BottlingPlant * bottlingPlant = new BottlingPlant{
         printer,
         nameServer,
@@ -75,6 +63,17 @@ int main (int argc, char* argv[]) {
         configParms.maxStockPerFlavour,
         configParms.timeBetweenShipments    
     };
+    Parent * parent = new Parent{printer, *bank, configParms.numStudents, configParms.parentalDelay};
+
+    std::vector<Student*> students;
+    for (int i = 0; i < configParms.numStudents; ++i) {
+        students.emplace_back(new Student{printer, nameServer, *watCardOffice, groupoff, i, configParms.maxPurchases});
+    }
+
+    std::vector<VendingMachine *> vendingMachines;
+    for (int i = 0; i < configParms.numVendingMachines; ++i) {
+        vendingMachines.emplace_back(new VendingMachine{printer, nameServer, i, configParms.sodaCost});
+    }
     // std::osacquire(/**/std::cout) << "gonna delete students now B)" << std::endl;
 
     for (int i = 0; i < configParms.numStudents; ++i) {

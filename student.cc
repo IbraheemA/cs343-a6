@@ -78,9 +78,10 @@ void Student::main() {
     // std::osacquire(/**/std::cout) << "suicide time B) " << id << std::endl;
 
     // std::cout << "time to delete watcard " << id << std::endl;
-    // _Select( watCard );
-    // delete watCard; // XXX Maybe have to _Select( watCard ) before this bc of the "only buys 1 on gift card case"? 
-
+    try {
+        _Select( watCard );
+        delete watCard; // XXX Maybe have to _Select( watCard ) before this bc of the "only buys 1 on gift card case"?
+    } catch (WATCardOffice::Lost &) {}
     // std::osacquire(/**/std::cout) << "successful suicide B) " << id << std::endl;
 
     printer.print(Printer::Kind::Student, id, 'F');

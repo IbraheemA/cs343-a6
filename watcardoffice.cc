@@ -32,6 +32,9 @@ void WATCardOffice::main() {
             while (!jobQueue.empty()) {
                 Job * j = jobQueue.front();
                 jobQueue.pop();
+                // if (j->existingCard != nullptr) {
+                //     delete j->existingCard;
+                // }
                 delete j;
             }
 
