@@ -74,31 +74,22 @@ int main (int argc, char* argv[]) {
     for (int i = 0; i < configParms.numVendingMachines; ++i) {
         vendingMachines.emplace_back(new VendingMachine{printer, nameServer, i, configParms.sodaCost});
     }
-    // std::osacquire(/**/std::cout) << "gonna delete students now B)" << std::endl;
 
     for (int i = 0; i < configParms.numStudents; ++i) {
         delete students[i];
     }
-    // std::osacquire(/**/std::cout) << "gonna delete plant now B)" << std::endl;
 
     delete bottlingPlant;
 
-    // std::osacquire(/**/std::cout) << "gonna delete vending machines now B)" << std::endl;
 
     for (int i = 0; i < configParms.numVendingMachines; ++i) {
         delete vendingMachines[i];
     }
 
-
-    // std::osacquire(/**/std::cout) << "gonna delete watCardOffice now B)" << std::endl;
-
     delete watCardOffice;
 
-    // std::osacquire(/**/std::cout) << "gonna delete parent now B)" << std::endl;
     delete parent;
-    // std::osacquire(/**/std::cout) << "gonna delete bank now B)" << std::endl;
 
     delete bank;
 
-    // std::osacquire(/**/std::cout) << "donezo" << std::endl;
 }

@@ -1,9 +1,5 @@
 #pragma once
 
-// #include "printer.h"
-// #include "vendingmachine.h"
-
-
 _Monitor Printer;
 _Task VendingMachine;
 

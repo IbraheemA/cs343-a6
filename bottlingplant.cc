@@ -32,7 +32,6 @@ void BottlingPlant::main() {
     }
 
     std::ofstream test_out{"t.out", std::ios::app};
-    // std::osacquire(/**/std::cout) << "plant death time B)" << std::endl;
     printer.print(Printer::Kind::BottlingPlant, 'F');
 }
 
@@ -57,7 +56,6 @@ BottlingPlant::~BottlingPlant() {
 
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
     std::ofstream test_out{"t.out", std::ios::app};
-    // std::osacquire(/**/std::cout) << "shipment pls?" << std::endl;
     if (shutdownHasHappened) {
         throw Shutdown();
     }

@@ -10,7 +10,6 @@ void Truck::main() {
     VendingMachine ** vms = nameServer.getMachineList();
     for (;;) {
       std::ofstream test_out{"t.out", std::ios::app};
-      // std::osacquire(/**/std::cout) << "trucking along" << std::endl;
       yield(prng(1, 10));
       plant.getShipment(cargo);
       int inventoryCount = 0;
@@ -53,7 +52,6 @@ void Truck::main() {
   } catch(BottlingPlant::Shutdown e) {}
 
   std::ofstream test_out{"t.out", std::ios::app};
-  // std::osacquire(/**/std::cout) << "sweet release" << std::endl;
   printer.print(Printer::Kind::Truck, 'F');
 }
 

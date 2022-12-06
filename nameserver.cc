@@ -20,7 +20,6 @@ void NameServer::main() {
 
     std::ofstream test_out{"t.out", std::ios::app};
     printer.print(Printer::Kind::NameServer, 'F');
-    // std::osacquire(/**/std::cout) << "nameserver ded" << std::endl;
 }
 
 NameServer::NameServer( Printer & prt, unsigned int numVendingMachines, unsigned int numStudents ):

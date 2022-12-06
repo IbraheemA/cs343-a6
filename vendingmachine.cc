@@ -42,14 +42,11 @@ VendingMachine::~VendingMachine() {
 
 void VendingMachine::buy( BottlingPlant::Flavours flavour, WATCard & card ) {
     std::ofstream test_out{"t.out", std::ios::app};
-    // std::osacquire(/**/std::cout) << "buy time" << std::endl;
     if (card.getBalance() < sodaCost) {
-        // std::osacquire(/**/std::cout) << "u broke" << std::endl;
         _Throw Funds();
         std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
     if (currentInventory[flavour] == 0) {
-        // std::osacquire(/**/std::cout) << "no stock" << std::endl;
         _Throw Stock();
         std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
@@ -60,7 +57,6 @@ void VendingMachine::buy( BottlingPlant::Flavours flavour, WATCard & card ) {
     }
     card.withdraw(sodaCost);
     printer.print(Printer::Kind::Vending, id, 'B', flavour, currentInventory[flavour]);
-    // std::osacquire(/**/std::cout) << "done buying" << std::endl;
 }
 unsigned int * VendingMachine::inventory() {
     return currentInventory;

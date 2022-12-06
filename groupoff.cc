@@ -49,16 +49,7 @@ void Groupoff::main() {
             printer.print(Printer::Kind::Groupoff, 'D', sodaCost);
         }
     }
-    // std::ofstream test_out{"t.out", std::ios::app};
-    // std::osacquire(/**/std::cout) << "groupoff ded" << std::endl;
     printer.print(Printer::Kind::Groupoff, 'F');
 }
 
-Groupoff::~Groupoff() {
-    // for (int i = 0; i < numStudents; i += 1) {
-    //     _Select( fWATCardPool[i]) {
-    //         delete fWATCardPool[i];
-    //         fWATCardPool[i].reset();
-    //     } _Else {}
-    // }
-}
+Groupoff::~Groupoff() {}
