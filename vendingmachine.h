@@ -14,11 +14,14 @@ _Task VendingMachine {
 
     unsigned int * currentInventory;
 	void main();
+
+	uOwnerLock mlk;
   public:
 	_Event Free {};						// free, advertisement
 	_Event Funds {};					// insufficient funds
 	_Event Stock {};					// flavour out of stock
 	VendingMachine( Printer & prt, NameServer & nameServer, unsigned int id, unsigned int sodaCost );
+	~VendingMachine();
 	void buy( BottlingPlant::Flavours flavour, WATCard & card );
 	unsigned int * inventory() __attribute__(( warn_unused_result ));
 	void restocked();

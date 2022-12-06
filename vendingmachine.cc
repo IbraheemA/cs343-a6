@@ -8,21 +8,21 @@
 #include "nameserver.h"
 
 void VendingMachine::main() {
-    printer.print(Printer::Kind::Vending, 'S', sodaCost);
+    printer.print(Printer::Kind::Vending, id, 'S', sodaCost);
     for (;;) {
         try {
             _Accept(~VendingMachine) {
                 break;
             } or _Accept(inventory) {
-                printer.print(Printer::Kind::Vending, 'r');
+                printer.print(Printer::Kind::Vending, id, 'r');
                 _Accept(restocked);
-                printer.print(Printer::Kind::Vending, 'R');
+                printer.print(Printer::Kind::Vending, id, 'R');
             } or _Accept(buy);
         } catch( uMutexFailure::RendezvousFailure & ) {
             // XXX
         }
     }
-    printer.print(Printer::Kind::Vending, 'F');
+    printer.print(Printer::Kind::Vending, id, 'F');
 }
 
 VendingMachine::VendingMachine( Printer & prt, NameServer & nameServer, unsigned int id, unsigned int sodaCost ) :
@@ -30,6 +30,14 @@ printer{prt}, id{id}, sodaCost{sodaCost}
 {
     nameServer.VMregister(this);
     currentInventory = new unsigned int[NUM_OF_FLAVOURS];
+
+    for (int i = 0; i < NUM_OF_FLAVOURS; i++) {
+        currentInventory[i] = 0;
+    }
+}
+
+VendingMachine::~VendingMachine() {
+    delete [] currentInventory;
 }
 
 void VendingMachine::buy( BottlingPlant::Flavours flavour, WATCard & card ) {
@@ -38,18 +46,20 @@ void VendingMachine::buy( BottlingPlant::Flavours flavour, WATCard & card ) {
     if (card.getBalance() < sodaCost) {
         // std::osacquire(/**/std::cout) << "u broke" << std::endl;
         _Throw Funds();
+        std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
     if (currentInventory[flavour] == 0) {
         // std::osacquire(/**/std::cout) << "no stock" << std::endl;
         _Throw Stock();
+        std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
     currentInventory[flavour]--;
     if (prng(1,5) == 1) { // 1 in 5 chance the soda is free
-        printer.print(Printer::Kind::Vending, 'A');
+        printer.print(Printer::Kind::Vending, id, 'A');
         _Throw Free();
     }
     card.withdraw(sodaCost);
-    printer.print(Printer::Kind::Vending, 'B', flavour, currentInventory[flavour]);
+    printer.print(Printer::Kind::Vending, id, 'B', flavour, currentInventory[flavour]);
     // std::osacquire(/**/std::cout) << "done buying" << std::endl;
 }
 unsigned int * VendingMachine::inventory() {

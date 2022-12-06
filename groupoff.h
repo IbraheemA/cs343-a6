@@ -16,5 +16,6 @@ _Task Groupoff {
     unsigned int nextCardToAssign = 0;
   public:
     Groupoff( Printer & prt, unsigned int numStudents, unsigned int sodaCost, unsigned int groupoffDelay );
+    ~Groupoff();
     WATCard::FWATCard giftCard();
 };

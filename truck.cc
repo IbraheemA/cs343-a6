@@ -26,7 +26,7 @@ void Truck::main() {
         unsigned int * inventory = vms[restockIndex]->inventory();
         for (int j = 0; j < NUM_OF_FLAVOURS; j++) {
           if (cargo[j] > 0 && inventory[j] < maxStockPerFlavour) {
-            int newInventory = std::max(inventory[j] + cargo[j], maxStockPerFlavour);
+            int newInventory = std::min(inventory[j] + cargo[j], maxStockPerFlavour);
             totalBottlesMissing += maxStockPerFlavour - newInventory;
             int bottlesUnloaded = newInventory - inventory[j];
             inventoryCount -= bottlesUnloaded;
@@ -63,4 +63,8 @@ Truck::Truck( Printer & prt, NameServer & nameServer, BottlingPlant & plant,
   numVendingMachines{numVendingMachines}, maxStockPerFlavour{maxStockPerFlavour} {
     cargo = new unsigned int[numVendingMachines];
     restockIndex = 0;
+}
+
+Truck::~Truck() {
+  delete [] cargo;
 }

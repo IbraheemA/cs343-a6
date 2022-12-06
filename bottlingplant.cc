@@ -51,6 +51,10 @@ BottlingPlant::BottlingPlant(
     }
 }
 
+BottlingPlant::~BottlingPlant() {
+    delete [] nextShipment;
+}
+
 void BottlingPlant::getShipment( unsigned int cargo[] ) {
     std::ofstream test_out{"t.out", std::ios::app};
     // std::osacquire(/**/std::cout) << "shipment pls?" << std::endl;

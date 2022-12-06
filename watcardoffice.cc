@@ -14,7 +14,8 @@ void WATCardOffice::main() {
             new Courier(
                 *this,
                 bank,
-                printer
+                printer,
+                i
             )
         );
     }
@@ -97,7 +98,7 @@ WATCardOffice::Job * WATCardOffice::requestWork() {
 }
 
 void WATCardOffice::Courier::main() {
-    printer.print(Printer::Kind::Courier, 'S');
+    printer.print(Printer::Kind::Courier, id, 'S');
     for (;;) {
         // std::ofstream test_out{"t.out", std::ios::app};
         // Block and wait for work
@@ -110,7 +111,7 @@ void WATCardOffice::Courier::main() {
 
         // std::osacquire(/**/std::cout) << "now let's withdraw" << std::endl;
 
-        printer.print(Printer::Kind::Courier, 't', j->sid, j->amount);
+        printer.print(Printer::Kind::Courier, id, 't', j->sid, j->amount);
         bank.withdraw(j->sid, j->amount); // Potentially blocking call to bank // XXX need to catch RendezvousFailure
         // std::osacquire(/**/std::cout) << "done withdrawing" << std::endl;
 
@@ -131,7 +132,7 @@ void WATCardOffice::Courier::main() {
             if (prng(6) == 0) {
                 // std::osacquire(/**/std::cout) << "card lost" << std::endl;
                 // WATCard lost; deliver exception
-                printer.print(Printer::Kind::Courier, 'L', j->sid);
+                printer.print(Printer::Kind::Courier, id, 'L', j->sid);
                 j->result.delivery(new Lost());
                 if (j->existingCard == nullptr) {
                     delete realCard;
@@ -140,7 +141,7 @@ void WATCardOffice::Courier::main() {
                 // WATCard successfully delivered
                 // std::osacquire(/**/std::cout) << "deliver realCard" << std::endl;
                 j->result.delivery(realCard);
-                printer.print(Printer::Kind::Courier, 'T', j->sid, j->amount);
+                printer.print(Printer::Kind::Courier, id, 'T', j->sid, j->amount);
             }
         }
 

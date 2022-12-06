@@ -10,12 +10,12 @@
 void Student::main() {
     unsigned int numPurchases = prng(1, maxPurchases);
     BottlingPlant::Flavours favFlavour = (BottlingPlant::Flavours)prng(4); // XXX is cast necessary?
-    printer.print(Printer::Kind::Student, 'S', favFlavour, numPurchases);
+    printer.print(Printer::Kind::Student, id, 'S', favFlavour, numPurchases);
 
     WATCard::FWATCard watCard = cardOffice.create(id, 5);
     WATCard::FWATCard giftCard = groupoff.giftCard();
     VendingMachine * machine = nameServer.getMachine(id);
-    printer.print(Printer::Kind::Student, 'V', machine->getId());
+    printer.print(Printer::Kind::Student, id, 'V', machine->getId());
 
     std::ofstream test_out{"t.out", std::ios::app};
     // std::osacquire(/**/std::cout) << "commence student B)" << id << std::endl;
@@ -32,13 +32,14 @@ void Student::main() {
                     WATCard & realCard = *giftCard;
                     unsigned int balance = realCard.getBalance();
                     machine->buy(favFlavour, realCard);
-                    printer.print(Printer::Kind::Student, 'G', favFlavour, balance);
+                    printer.print(Printer::Kind::Student, id, 'G', favFlavour, balance);
+                    delete giftCard;
                     giftCard.reset();
                 } or _Select ( watCard ) {
                     WATCard & realCard = *watCard;
                     unsigned int balance = realCard.getBalance();
                     machine->buy(favFlavour, realCard);
-                    printer.print(Printer::Kind::Student, 'B', favFlavour, balance);
+                    printer.print(Printer::Kind::Student, id, 'B', favFlavour, balance);
                 }
                 // std::osacquire(/**/std::cout) << "decrement time" << id << std::endl;
                 numPurchases -= 1; // Successfully bought and paid for a soda; standard outcome
@@ -47,10 +48,10 @@ void Student::main() {
                 // Got a free soda; fixed yield then re-attempt 
                 _Select ( giftCard ) { // XXX
                     WATCard & realCard = *giftCard;
-                    printer.print(Printer::Kind::Student, 'a', favFlavour, realCard.getBalance());
+                    printer.print(Printer::Kind::Student, id, 'a', favFlavour, realCard.getBalance());
                 } or _Select ( watCard ) {
                     WATCard & realCard = *watCard;
-                    printer.print(Printer::Kind::Student, 'A', favFlavour, realCard.getBalance());
+                    printer.print(Printer::Kind::Student, id, 'A', favFlavour, realCard.getBalance());
                 }
                 yield(4);
             } catch (VendingMachine::Funds &) {
@@ -61,11 +62,11 @@ void Student::main() {
             } catch (VendingMachine::Stock &) {
                 // std::osacquire(/**/std::cout) << "stonks time" << id << std::endl;
                 machine = nameServer.getMachine(id);
-                printer.print(Printer::Kind::Student, 'V', machine->getId());
+                printer.print(Printer::Kind::Student, id, 'V', machine->getId());
             } catch(WATCardOffice::Lost &) {
                 // If the courier has lost the card, "_Select" will throw "Lost"; get a new card
                 // std::osacquire(/**/std::cout) << "lost time" << id << std::endl;
-                printer.print(Printer::Kind::Student, 'L');
+                printer.print(Printer::Kind::Student, id, 'L');
                 watCard = cardOffice.create(id, 5);
                 continue; // Loop back in order to retry-without-random-wait
             }
@@ -82,7 +83,7 @@ void Student::main() {
 
     // std::osacquire(/**/std::cout) << "successful suicide B) " << id << std::endl;
 
-    printer.print(Printer::Kind::Student, 'F');
+    printer.print(Printer::Kind::Student, id, 'F');
 }
 
 Student::Student( Printer & prt, NameServer & nameServer, WATCardOffice & cardOffice, Groupoff & groupoff,

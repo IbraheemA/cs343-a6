@@ -29,10 +29,11 @@ _Task WATCardOffice {
         WATCardOffice & office;
         Bank & bank;
         Printer & printer;
+        int id;
 
         public:
-            Courier( WATCardOffice & office, Bank & bank, Printer & printer )
-            : office(office), bank(bank), printer{printer} {}
+            Courier( WATCardOffice & office, Bank & bank, Printer & printer, int id )
+            : office(office), bank(bank), printer{printer}, id{id} {}
     };					// communicates with bank
 
     void main() override;
