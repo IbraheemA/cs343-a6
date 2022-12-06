@@ -37,10 +37,10 @@ _Monitor Printer {
 			for (int i = 0; i < 6 + numStudents + numVendingMachines + numCouriers; i++) {
 				if (printBuffer[i] != nullptr) {
 					printBuffer[i]->print();
-					std::cout << "\t";
 					delete printBuffer[i];
 					printBuffer[i] = nullptr;
 				}
+				std::cout << "\t";
 			}
 			std::cout << std::endl;
 		}
@@ -50,13 +50,13 @@ _Monitor Printer {
 		int offset = 6 + lid;
 		switch (kind)
 		{
-		case Student:
+		case 6:
 			break;
-		case Vending:
+		case 7:
 			offset += numStudents;
 			break;
-		case Courier:
-			offset += numVendingMachines;
+		case 8:
+			offset += numStudents + numVendingMachines;
 			break;
 		default:
 			break;
@@ -73,6 +73,23 @@ _Monitor Printer {
 				// std::cout <<  << "\t"; 
 				printBuffer[i] = nullptr;
 			}
+
+			std::cout << "Parent\tGropoff\tWATOff\tNames\tTruck\tPlant\t";
+
+			for (int i = 0; i < numStudents; i++) {
+				std::cout << "Stud" << i << "\t";
+			}
+			for (int i = 0; i < numVendingMachines; i++) {
+				std::cout << "Mach" << i << "\t";
+			}
+			for (int i = 0; i < numCouriers; i++) {
+				std::cout << "Cour" << i << "\t";
+			}
+			std::cout << std::endl;
+			for (int i = 0; i < 6 + numStudents + numVendingMachines + numCouriers; i++) {
+				std::cout << "*******\t";
+			}
+			std::cout << std::endl;
 		}
 	~Printer() {
 		for (int i = 0; i < 6 + numStudents + numVendingMachines + numCouriers; i++) {
