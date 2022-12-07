@@ -110,11 +110,9 @@ void WATCardOffice::Courier::main() {
 
             if (prng(6) == 0) {
                 // WATCard lost; deliver exception
+                j->result.exception(new Lost);
                 printer.print(Printer::Kind::Courier, id, 'L', j->sid);
-                j->result.exception(new Lost());
-                if (j->existingCard == nullptr) {
-                    delete realCard;
-                }
+                delete realCard;
             } else {
                 // WATCard successfully delivered
                 j->result.delivery(realCard);

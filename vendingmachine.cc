@@ -44,11 +44,9 @@ void VendingMachine::buy( BottlingPlant::Flavours flavour, WATCard & card ) {
     std::ofstream test_out{"t.out", std::ios::app};
     if (card.getBalance() < sodaCost) {
         _Throw Funds();
-        std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
     if (currentInventory[flavour] == 0) {
         _Throw Stock();
-        std::cout << "AHHHHHHH\n\n\n" << std::endl;
     }
     currentInventory[flavour]--;
     if (prng(1,5) == 1) { // 1 in 5 chance the soda is free

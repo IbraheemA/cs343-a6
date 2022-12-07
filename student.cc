@@ -50,7 +50,7 @@ void Student::main() {
                 yield(4);
             } catch (VendingMachine::Funds &) {
                 _Select ( watCard );
-                cardOffice.transfer(id, machine->cost() + 5, watCard);
+                watCard = cardOffice.transfer(id, machine->cost() + 5, watCard);
             } catch (VendingMachine::Stock &) {
                 machine = nameServer.getMachine(id);
                 printer.print(Printer::Kind::Student, id, 'V', machine->getId());
