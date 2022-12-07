@@ -64,6 +64,7 @@ void Student::main() {
         }
     }
 
+    _Select ( giftCard );
     try {
         _Select( watCard );
         delete watCard; // XXX Maybe have to _Select( watCard ) before this bc of the "only buys 1 on gift card case"?
