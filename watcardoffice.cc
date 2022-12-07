@@ -51,6 +51,7 @@ void WATCardOffice::main() {
             break;
         } or _Accept(create || transfer || requestWork);
     }
+    printer.print(Printer::Kind::WATCardOffice, 'F');
 }
 
 WATCardOffice::WATCardOffice( Printer & prt, Bank & bank, unsigned int numCouriers )
@@ -110,7 +111,7 @@ void WATCardOffice::Courier::main() {
             if (prng(6) == 0) {
                 // WATCard lost; deliver exception
                 printer.print(Printer::Kind::Courier, id, 'L', j->sid);
-                j->result.delivery(new Lost());
+                j->result.exception(new Lost());
                 if (j->existingCard == nullptr) {
                     delete realCard;
                 }
@@ -123,5 +124,5 @@ void WATCardOffice::Courier::main() {
 
         delete j;
     }
-    printer.print(Printer::Kind::WATCardOffice, 'F');
+    printer.print(Printer::Kind::Courier, 'F');
 }

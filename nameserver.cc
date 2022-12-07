@@ -44,6 +44,7 @@ VendingMachine * NameServer::getMachine( unsigned int id ) {
     int index = (id + offsets[id]) % numVendingMachines;
     offsets[id]++;
     VendingMachine * m = vendingMachines[index];
+    printer.print(Printer::Kind::NameServer, 'N', id, m->getId());
     return m;
 }
 
