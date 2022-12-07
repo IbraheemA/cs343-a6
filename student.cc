@@ -19,6 +19,8 @@ void Student::main() {
 
     std::ofstream test_out{"t.out", std::ios::app};
 
+    bool giftCardUsed = false;
+
     while (numPurchases > 0) {
         // Wait before each attempt to buy soda
         yield(prng(1,10));
@@ -31,6 +33,7 @@ void Student::main() {
                     printer.print(Printer::Kind::Student, id, 'G', favFlavour, balance);
                     delete giftCard;
                     giftCard.reset();
+                    giftCardUsed = true;
                 } or _Select ( watCard ) {
                     WATCard & realCard = *watCard;
                     unsigned int balance = realCard.getBalance();
@@ -50,7 +53,7 @@ void Student::main() {
                 yield(4);
             } catch (VendingMachine::Funds &) {
                 _Select ( watCard );
-                watCard = cardOffice.transfer(id, machine->cost() + 5, watCard);
+                cardOffice.transfer(id, machine->cost() + 5, watCard);
             } catch (VendingMachine::Stock &) {
                 machine = nameServer.getMachine(id);
                 printer.print(Printer::Kind::Student, id, 'V', machine->getId());
@@ -64,7 +67,10 @@ void Student::main() {
         }
     }
 
-    _Select ( giftCard );
+    if (!giftCardUsed) {
+        _Select ( giftCard );
+        delete giftCard;
+    }
     try {
         _Select( watCard );
         delete watCard; // XXX Maybe have to _Select( watCard ) before this bc of the "only buys 1 on gift card case"?
